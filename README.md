@@ -61,6 +61,7 @@ a session you have to synchronize the entities with `Session.flush()` and `Sessi
 # Dependencies
 * org.hibernate:hibernate-core:5.2.0.Final
 * org.springframework:spring-context:4.3.2.RELEASE
+
 Other versions doesn't test.
 
 # Disclaimer
