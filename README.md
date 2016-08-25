@@ -28,7 +28,7 @@ That looks promising. But how does Hibernate know which `Locale` is relevant?
 
 ## LocaleResolver
 That's the job of a `LocaleResolver` implementation. Implement or choose one
-from the package `de.malkusch.localized.localeResolver`. There are several
+from the package `io.github.deathman.localized.localeResolver`. There are several
 ways of registering the LocaleResolver:
 
 Specify the fully qualified class name in the hibernate property 
