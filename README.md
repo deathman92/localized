@@ -1,4 +1,4 @@
-Rewriting https://github.com/malkusch/localized project for my own needs. Now support Hibernate 5.2.Final. Don't testing other versions.
+Rewriting https://github.com/malkusch/localized project for my own needs. Now support Hibernate 5.2.0.Final. Don't testing other versions.
 
 # @Localized
 Internationalization (i18n) is so boring. There is not one single best
@@ -57,6 +57,11 @@ I18n happens around Hibernate's `POST_LOAD`, `POST_UPDATE`, `POST_INSERT` and `P
 events. In between nothing happens. I.e. you have to fix the locale at Session begin
 (before the first `POST_LOAD` event on a localized entity). If you change the locale during
 a session you have to synchronize the entities with `Session.flush()` and `Session.refresh(Object)`.
+
+# Dependencies
+* org.hibernate:hibernate-core:5.2.0.Final
+* org.springframework:spring-context:4.3.2.RELEASE
+Other versions doesn't test.
 
 # Disclaimer
 There is no practical knowledge about stability, scalabilty or performance.
