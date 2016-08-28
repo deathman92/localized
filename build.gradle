@@ -10,6 +10,12 @@ buildscript {
     }
 }
 
+ext {
+    artifactoryUrl = "${System.env['CI_ARTIFACTORY_URL'] ?: property('artifactory.url')}"
+    artifactoryUser = "${System.env['CI_ARTIFACTORY_USER'] ?: property('artifactory.user')}"
+    artifactoryPassword = "${System.env['CI_ARTIFACTORY_PASSWORD'] ?: property('artifactory.password')}"
+}
+
 ext['project.version'] = '0.9'
 ext['hibernate.version'] = '5.2.2.Final'
 ext['slf4j.version'] = '1.7.21'
@@ -79,12 +85,12 @@ publishing {
 }
 
 artifactory {
-    contextUrl = "http://${System.env["CI_ARTIFACTORY_URL"] ?: property('artifactory.url')}/artifactory/"
+    contextUrl = "http://${artifactoryUrl}/artifactory/"
     publish {
         repository {
             repoKey = 'libs-release-local'
-            username = "${System.env["CI_ARTIFACTORY_USER"] ?: property('artifactory.user')}"
-            password = "${System.env["CI_ARTIFACTORY_PASSWORD"] ?: property('artifactory.password')}"
+            username = "${artifactoryUser}"
+            password = "${artifactoryPassword}"
             maven = true
         }
         defaults {
