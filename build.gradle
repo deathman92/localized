@@ -1,15 +1,4 @@
 buildscript {
-    ext {
-        projectVersion = '0.8'
-        hibernateVersion = '5.2.0.Final'
-        slf4jVersion = '1.7.21'
-        springVersion = '4.3.2.RELEASE'
-        lombokVersion = '1.16.10'
-        junitVersion = '4.12'
-        assertjVersion = '2.5.0'
-        slf4jTestVersion = '1.1.0'
-        h2Version = '1.4.192'
-    }
     repositories {
         jcenter()
         maven {url "https://plugins.gradle.org/m2/"}
@@ -21,61 +10,87 @@ buildscript {
     }
 }
 
-group 'io.github.deathman.localized'
-version "${projectVersion}"
+ext['project.version'] = '0.9'
+ext['hibernate.version'] = '5.2.2.Final'
+ext['slf4j.version'] = '1.7.21'
+ext['spring.version'] = '4.3.2.RELEASE'
+ext['lombok.version'] = '1.16.10'
+ext['junit.version'] = '4.12'
+ext['assertj.version'] = '2.5.0'
+ext['slf4j.test.version'] = '1.1.0'
+ext['h2.version'] = '1.4.192'
+
+group "io.github.deathman.localized"
+version "${property('project.version')}"
+description 'Localized is an i18n extension for Hibernate. The @Localized\n' +
+            '\t\tannotation provides transparent i18n support on\n' +
+            '\t\t@Entity properties.'
 
 apply plugin: 'java'
 apply plugin: 'idea'
-apply plugin: 'eclipse'
 apply plugin: 'propdeps'
 apply plugin: 'propdeps-maven'
 apply plugin: 'propdeps-idea'
-apply plugin: 'propdeps-eclipse'
 apply plugin: 'maven-publish'
 apply plugin: 'com.jfrog.artifactory'
 
 sourceCompatibility = JavaVersion.VERSION_1_8
+targetCompatibility = JavaVersion.VERSION_1_8
 
 repositories {
     jcenter()
 }
 
 dependencies {
-    compile("org.slf4j:slf4j-api:${slf4jVersion}")
-    provided("org.hibernate:hibernate-core:${hibernateVersion}")
-    provided("org.projectlombok:lombok:${lombokVersion}")
-    provided("org.springframework:spring-context:${springVersion}")
-    testCompile("junit:junit:${junitVersion}")
-    testCompile("org.assertj:assertj-core:${assertjVersion}")
-    testCompile("uk.org.lidalia:slf4j-test:${slf4jTestVersion}")
-    testRuntime("com.h2database:h2:${h2Version}")
+    compile("org.slf4j:slf4j-api:${property('slf4j.version')}")
+    provided("org.hibernate:hibernate-core:${property('hibernate.version')}")
+    provided("org.projectlombok:lombok:${property('lombok.version')}")
+    provided("org.springframework:spring-context:${property('spring.version')}")
+    testCompile("junit:junit:${property('junit.version')}")
+    testCompile("org.assertj:assertj-core:${property('assertj.version')}")
+    testCompile("uk.org.lidalia:slf4j-test:${property('slf4j.test.version')}")
+    testRuntime("com.h2database:h2:${property('h2.version')}")
 }
 
-task sourcesJar ( type: Jar, dependsOn: classes ) {
+test {
+    testLogging.showStandardStreams = true
+
+    beforeTest { descriptor ->
+        logger.lifecycle("Running test: " + descriptor)
+    }
+}
+
+task sourcesJar (type: Jar) {
     classifier 'sources'
-    from sourceSets.main.allJava
+    from sourceSets.main.allSource
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from 'build/docs/javadoc'
 }
 
 publishing {
     publications {
         mavenJava(MavenPublication) {
-            groupId 'io.github.deathman.localized'
-            artifactId 'localized'
-            version "${projectVersion}"
+            groupId "${project.group}"
+            artifactId "${project.name}"
+            version "${project.version}"
 
             from components.java
             artifact sourcesJar
+            artifact javadocJar
         }
     }
 }
 
 artifactory {
-    contextUrl = "http://${artifactoryUrl}/artifactory/"
+    contextUrl = "http://${System.env["CI_ARTIFACTORY_URL"] ?: property('artifactory.url')}/artifactory/"
     publish {
         repository {
             repoKey = 'libs-release-local'
-            username = "${artifactoryUser}"
-            password = "${artifactoryPassword}"
+            username = "${System.env["CI_ARTIFACTORY_USERNAME"] ?: property('artifactory.user')}"
+            password = "${System.env["CI_ARTIFACTORY_PASSWORD"] ?: property('artifactory.password')}"
             maven = true
         }
         defaults {
