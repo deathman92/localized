@@ -11,7 +11,7 @@ buildscript {
     }
 }
 
-ext['project.version'] = '0.9-SNAPSHOT'
+ext['project.version'] = '0.10'
 ext['hibernate.version'] = '5.2.2.Final'
 ext['slf4j.version'] = '1.7.21'
 ext['spring.version'] = '4.3.2.RELEASE'
@@ -104,11 +104,4 @@ artifactory {
     }
 }
 
-tasks.artifactoryPublish {
-    doFirst {
-        println "${artifactoryUrl}"
-        println "${artifactoryUser}"
-        println "${artifactoryPassword}"
-    }
-}
 artifactoryPublish.dependsOn publish
