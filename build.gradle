@@ -104,4 +104,11 @@ artifactory {
     }
 }
 
+tasks.artifactoryPublish {
+    doFirst {
+        println "${artifactoryUrl}"
+        println "${artifactoryUser}"
+        println "${artifactoryPassword}"
+    }
+}
 artifactoryPublish.dependsOn publish
