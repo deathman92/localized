@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/deathman92/localized.svg?branch=master)](https://travis-ci.org/deathman92/localized) 
 Rewriting https://github.com/malkusch/localized project for my own needs. Now support Hibernate 5.2.0.Final. Don't testing other versions.
 
 # @Localized

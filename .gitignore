@@ -1,6 +1,9 @@
 *.jar
 !gradle-wrapper.jar
 .gradle/
-gradle.properties
+gradle-local.properties
 build/
 .idea/
+*.iml
+*.ipr
+*.iws

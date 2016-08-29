@@ -6,17 +6,12 @@ buildscript {
     }
     dependencies {
         classpath("org.springframework.build.gradle:propdeps-plugin:0.0.7")
+        classpath("net.saliman:gradle-properties-plugin:1.4.5")
         classpath("org.jfrog.buildinfo:build-info-extractor-gradle:4.0.0")
     }
 }
 
-ext {
-    artifactoryUrl = "${System.env['CI_ARTIFACTORY_URL'] ?: property('artifactory.url')}"
-    artifactoryUser = "${System.env['CI_ARTIFACTORY_USER'] ?: property('artifactory.user')}"
-    artifactoryPassword = "${System.env['CI_ARTIFACTORY_PASSWORD'] ?: property('artifactory.password')}"
-}
-
-ext['project.version'] = '0.9'
+ext['project.version'] = '0.9-SNAPSHOT'
 ext['hibernate.version'] = '5.2.2.Final'
 ext['slf4j.version'] = '1.7.21'
 ext['spring.version'] = '4.3.2.RELEASE'
@@ -37,11 +32,21 @@ apply plugin: 'idea'
 apply plugin: 'propdeps'
 apply plugin: 'propdeps-maven'
 apply plugin: 'propdeps-idea'
+apply plugin: 'net.saliman.properties'
 apply plugin: 'maven-publish'
 apply plugin: 'com.jfrog.artifactory'
 
 sourceCompatibility = JavaVersion.VERSION_1_8
 targetCompatibility = JavaVersion.VERSION_1_8
+
+ext {
+    isReleaseVersion = !project.version.endsWith("-SNAPSHOT")
+
+    artifactoryRepo = isReleaseVersion ? 'libs-release-local' : 'libs-snapshot-local'
+    artifactoryUrl = "${System.env['CI_ARTIFACTORY_URL'] ?: property('artifactory.url')}"
+    artifactoryUser = "${System.env['CI_ARTIFACTORY_USER'] ?: property('artifactory.user')}"
+    artifactoryPassword = "${System.env['CI_ARTIFACTORY_PASSWORD'] ?: property('artifactory.password')}"
+}
 
 repositories {
     jcenter()
@@ -88,7 +93,7 @@ artifactory {
     contextUrl = "http://${artifactoryUrl}/artifactory/"
     publish {
         repository {
-            repoKey = 'libs-release-local'
+            repoKey = "${artifactoryRepo}"
             username = "${artifactoryUser}"
             password = "${artifactoryPassword}"
             maven = true
