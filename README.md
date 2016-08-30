@@ -30,13 +30,13 @@ That looks promising. But how does Hibernate know which `Locale` is relevant?
 
 ## LocaleResolver
 That's the job of a `LocaleResolver` implementation. Implement or choose one
-from the package `io.github.deathman.localized.localeResolver`. There are several
+from the package `io.github.deathman.localized.locale_resolver`. There are several
 ways of registering the LocaleResolver:
 
 Specify the fully qualified class name in the hibernate property 
 *hibernate.listeners.localized.locale_resolver*:
 ```xml
-<property name="hibernate.listeners.localized.locale_resolver">io.github.deathman.localized.localeResolver.SpringLocaleResolver</property>
+<property name="hibernate.listeners.localized.locale_resolver">io.github.deathman.localized.locale_resolver.SpringLocaleResolver</property>
 ``` 
 Register it programmatically:
 ```java
@@ -49,7 +49,7 @@ entities (each locale one entity). Hibernate's event system provides theinfrastr
 replacing and storing transparently the `@Localized` fields.This concept increases the Session 
 communication. Don't use `@Localized` when performance is a concern.
 
-Some consepts of original realisation have been remaded. 
+Some concepts of original realisation have been remade. 
 * Type of field 'value' is String now instead of @Lob.
 * Reference by type is replaced with refenrence by table name to simplify inserting by SQL. 
 * If no translation found for locale default value of field is used.
@@ -61,14 +61,14 @@ events. In between nothing happens. I.e. you have to fix the locale at Session b
 a session you have to synchronize the entities with `Session.flush()` and `Session.refresh(Object)`.
 
 # Dependencies
-* org.hibernate:hibernate-core:5.2.0.Final
+* org.hibernate:hibernate-core:5.2.2.Final
 * org.springframework:spring-context:4.3.2.RELEASE
 
 Other versions doesn't test.
 
 # Disclaimer
-There is no practical knowledge about stability, scalabilty or performance.
+There is no practical knowledge about stability, scalability or performance.
 Use it at your own risk! 
 
-# Lisence
+# Licence
 No license

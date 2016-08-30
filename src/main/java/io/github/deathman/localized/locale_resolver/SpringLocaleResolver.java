@@ -1,4 +1,4 @@
-package io.github.deathman.localized.localeResolver;
+package io.github.deathman.localized.locale_resolver;
 
 import org.hibernate.Session;
 import org.springframework.context.i18n.LocaleContextHolder;

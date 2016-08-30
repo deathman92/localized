@@ -23,14 +23,19 @@ public abstract class LocalizedRepository<T extends SharedSessionContract> {
 
     public LocalizedProperty find(String table, String field, Locale locale, Serializable id) {
         String queryString = "FROM LocalizedProperty WHERE instance = :instance" +
-                " AND field = :field" +
-                " AND tableName = :tableName";
+                " AND field = :field";
 
         Locale baseLocale = getBaseLocale(locale);
         if (baseLocale != null) {
-            queryString = queryString + " AND (locale = :locale OR locale = :baseLocale)";
+            queryString += " AND (locale = :locale OR locale = :baseLocale)";
         } else {
-            queryString = queryString + " AND locale = :locale";
+            queryString += " AND locale = :locale";
+        }
+        String tableNameWithoutSchema = getTableNameWithoutSchema(table);
+        if (tableNameWithoutSchema != null) {
+            queryString += " AND (tableName = :tableName OR tableName = :tableNameWOSchema)";
+        } else {
+            queryString += " AND tableName = :tableName";
         }
 
         Query<LocalizedProperty> query = session.createQuery(queryString, LocalizedProperty.class);
@@ -42,6 +47,9 @@ public abstract class LocalizedRepository<T extends SharedSessionContract> {
 
         if (baseLocale != null) {
             query.setParameter("baseLocale", baseLocale);
+        }
+        if (tableNameWithoutSchema != null) {
+            query.setParameter("tableNameWOSchema", tableNameWithoutSchema);
         }
 
         List<LocalizedProperty> results = query.list();
@@ -64,6 +72,13 @@ public abstract class LocalizedRepository<T extends SharedSessionContract> {
     private Locale getBaseLocale(Locale locale) {
         if (!StringUtils.isEmpty(locale.getCountry())) {
             return Locale.forLanguageTag(locale.getLanguage());
+        }
+        return null;
+    }
+
+    private String getTableNameWithoutSchema(String tableName) {
+        if (tableName.contains(".")) {
+            return tableName.substring(tableName.indexOf('.'));
         }
         return null;
     }

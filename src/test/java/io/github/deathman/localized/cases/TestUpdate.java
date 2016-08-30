@@ -1,6 +1,6 @@
 package io.github.deathman.localized.cases;
 
-import io.github.deathman.localized.localeResolver.ThreadLocalLocaleResolver;
+import io.github.deathman.localized.locale_resolver.ThreadLocalLocaleResolver;
 import io.github.deathman.localized.rule.SessionRule;
 import org.hibernate.Session;
 import org.junit.Before;

@@ -1,6 +1,6 @@
 package io.github.deathman.localized;
 
-import io.github.deathman.localized.localeResolver.LocaleResolver;
+import io.github.deathman.localized.locale_resolver.LocaleResolver;
 
 import java.lang.annotation.*;
 
