@@ -78,7 +78,7 @@ public abstract class LocalizedRepository<T extends SharedSessionContract> {
 
     private String getTableNameWithoutSchema(String tableName) {
         if (tableName.contains(".")) {
-            return tableName.substring(tableName.indexOf('.'));
+            return tableName.substring(tableName.indexOf('.') + 1);
         }
         return null;
     }
