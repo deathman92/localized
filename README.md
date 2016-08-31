@@ -36,7 +36,7 @@ ways of registering the LocaleResolver:
 Specify the fully qualified class name in the hibernate property 
 *hibernate.listeners.localized.locale_resolver*:
 ```xml
-<property name="hibernate.listeners.localized.locale_resolver">io.github.deathman.localized.locale_resolver.SpringLocaleResolver</property>
+<property name="hibernate.listeners.localized.locale_resolver">com.github.deathman92.localized.locale_resolver.SpringLocaleResolver</property>
 ``` 
 Register it programmatically:
 ```java
