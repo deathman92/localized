@@ -16,7 +16,7 @@ buildscript {
     }
 }
 
-ext['project.version'] = '0.12-SNAPSHOT'
+ext['project.version'] = '1.0.0'
 
 ext['hibernate.version'] = '5.2.2.Final'
 ext['slf4j.version'] = '1.7.21'
