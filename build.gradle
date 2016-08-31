@@ -47,9 +47,6 @@ sourceCompatibility = JavaVersion.VERSION_1_8
 targetCompatibility = JavaVersion.VERSION_1_8
 
 ext {
-    isReleaseVersion = !project.version.endsWith("-SNAPSHOT")
-
-    bintrayRepo = isReleaseVersion ? 'maven-release' : 'maven-snapshot'
     bintrayUser = "${System.env['CI_BINTRAY_USER'] ?: property('bintray.user')}"
     bintrayKey = "${System.env['CI_BINTRAY_KEY'] ?: property('bintray.key')}"
 }
@@ -100,7 +97,7 @@ bintray {
     key = "${bintrayKey}"
     publications = ["mavenJava"]
     pkg {
-        repo = "${bintrayRepo}"
+        repo = "maven-release"
         name = "${project.name}"
         desc = "${project.description}"
         licenses = ["MIT"]
