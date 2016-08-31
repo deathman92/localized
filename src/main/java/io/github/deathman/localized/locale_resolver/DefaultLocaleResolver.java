@@ -1,4 +1,4 @@
-package io.github.deathman.localized.localeResolver;
+package io.github.deathman.localized.locale_resolver;
 
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;

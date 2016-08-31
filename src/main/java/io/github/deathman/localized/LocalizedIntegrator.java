@@ -12,8 +12,8 @@ import org.hibernate.internal.util.config.ConfigurationHelper;
 import org.hibernate.service.spi.SessionFactoryServiceRegistry;
 import io.github.deathman.localized.event.ReadEventListener;
 import io.github.deathman.localized.event.WriteEventListener;
-import io.github.deathman.localized.localeResolver.DefaultLocaleResolver;
-import io.github.deathman.localized.localeResolver.LocaleResolver;
+import io.github.deathman.localized.locale_resolver.DefaultLocaleResolver;
+import io.github.deathman.localized.locale_resolver.LocaleResolver;
 
 import java.util.ServiceLoader;
 
@@ -30,7 +30,7 @@ public class LocalizedIntegrator implements Integrator {
 
     /**
      * The name of a configuration setting that registers a locale resolver.
-     * Default is io.deathman.github.localized.localeResolver.DefaultLocaleResolver
+     * Default is io.deathman.github.localized.locale_resolver.DefaultLocaleResolver
      */
     public static final String LOCALE_RESOLVER = "hibernate.listeners.localized.locale_resolver";
 

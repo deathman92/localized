@@ -5,7 +5,7 @@ import org.hibernate.Session;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
-import io.github.deathman.localized.localeResolver.ThreadLocalLocaleResolver;
+import io.github.deathman.localized.locale_resolver.ThreadLocalLocaleResolver;
 import io.github.deathman.localized.model.Book;
 
 import java.util.Locale;

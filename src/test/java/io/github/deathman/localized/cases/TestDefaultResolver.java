@@ -6,7 +6,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
-import io.github.deathman.localized.localeResolver.DefaultLocaleResolver;
+import io.github.deathman.localized.locale_resolver.DefaultLocaleResolver;
 import io.github.deathman.localized.model.Book;
 import uk.org.lidalia.slf4jtest.LoggingEvent;
 import uk.org.lidalia.slf4jtest.TestLogger;

@@ -1,6 +1,6 @@
 package io.github.deathman.localized.exception;
 
-import io.github.deathman.localized.localeResolver.LocaleResolver;
+import io.github.deathman.localized.locale_resolver.LocaleResolver;
 import lombok.NoArgsConstructor;
 
 /**

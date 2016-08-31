@@ -3,7 +3,7 @@ package io.github.deathman.localized.cases;
 import org.hibernate.Session;
 import org.junit.Test;
 import io.github.deathman.localized.exception.UnresolvedLocaleException;
-import io.github.deathman.localized.localeResolver.ThreadLocalLocaleResolver;
+import io.github.deathman.localized.locale_resolver.ThreadLocalLocaleResolver;
 
 import java.util.Locale;
 

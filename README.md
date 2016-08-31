@@ -30,13 +30,13 @@ This looks promising. But how does Hibernate know which `Locale` is relevant?
 
 ## LocaleResolver
 That's the job of a `LocaleResolver` implementation. Implement or choose one
-from the package `io.github.deathman.localized.localeResolver`. There are several
+from the package `io.github.deathman.localized.locale_resolver`. There are several
 ways of registering the LocaleResolver:
 
 Specify the fully qualified class name in the hibernate property 
 *hibernate.listeners.localized.locale_resolver*:
 ```xml
-<property name="hibernate.listeners.localized.locale_resolver">io.github.deathman.localized.localeResolver.SpringLocaleResolver</property>
+<property name="hibernate.listeners.localized.locale_resolver">io.github.deathman.localized.locale_resolver.SpringLocaleResolver</property>
 ``` 
 Register it programmatically:
 ```java
@@ -49,7 +49,7 @@ entities (each locale one entity). Hibernate's event system provides infrastruct
 replacing and storing transparently the `@Localized` fields.This concept increases the Session 
 communication. Do not use `@Localized` when performance is a concern.
 
-Some consepts of original realisation have been remaded. 
+Some concepts of original realisation have been remade. 
 * Type of field 'value' is String now instead of @Lob.
 * Reference by type is replaced with refenrence by table name to simplify inserting by SQL. 
 * If no translation found for locale default value of field is used.
@@ -67,8 +67,8 @@ a session you have to synchronize the entities with `Session.flush()` and `Sessi
 Other versions weren't tested.
 
 # Disclaimer
-There is no practical knowledge about stability, scalabilty or performance.
+There is no practical knowledge about stability, scalability or performance.
 Use it at your own risk! 
 
-# Lisence
+# Licence
 No license
