@@ -14,11 +14,6 @@ deploy:
     skip_cleanup: true
     on:
       branch: master
-  - provider: script
-    script: ./gradlew bintrayUpload
-    skip_cleanup: true
-    on:
-      branch: develop
 before_cache:
   - rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
   - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
