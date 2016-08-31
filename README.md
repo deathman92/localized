@@ -1,9 +1,9 @@
 [![Build Status](https://travis-ci.org/deathman92/localized.svg?branch=master)](https://travis-ci.org/deathman92/localized)
  
-Rewriting https://github.com/malkusch/localized project for my own needs. Now support Hibernate 5.2.0.Final. Don't testing other versions.
+Rewriting https://github.com/malkusch/localized project for my own needs. Now support Hibernate 5.2.2.Final. Other versions weren't tested.
 
 # @Localized
-Internationalization (i18n) is so boring. There is not one single best
+Internationalization (i18n) is so boring. There is no one single best
 practice. And they are all just a pain in the ass when your `String` is
 no more a String but something like a `Map<Locale, String>`. Bye JSR-303
 validation annotations. So let's try to find a solution which keeps i18n
@@ -26,7 +26,7 @@ class Book {
 ```
 
 `@Localized` annotates the property `Book.title` as a translatable `String`.
-That looks promising. But how does Hibernate know which `Locale` is relevant?
+This looks promising. But how does Hibernate know which `Locale` is relevant?
 
 ## LocaleResolver
 That's the job of a `LocaleResolver` implementation. Implement or choose one
@@ -45,9 +45,9 @@ LocalizedIntegrator.setLocaleResolver(new SpringLocaleResolver());
 
 # Concept
 The mechanism is straight forward: A `@Localized` field is backed by many `LocalizedProperty`
-entities (each locale one entity). Hibernate's event system provides theinfrastructure for 
+entities (each locale one entity). Hibernate's event system provides infrastructure for 
 replacing and storing transparently the `@Localized` fields.This concept increases the Session 
-communication. Don't use `@Localized` when performance is a concern.
+communication. Do not use `@Localized` when performance is a concern.
 
 Some consepts of original realisation have been remaded. 
 * Type of field 'value' is String now instead of @Lob.
@@ -61,10 +61,10 @@ events. In between nothing happens. I.e. you have to fix the locale at Session b
 a session you have to synchronize the entities with `Session.flush()` and `Session.refresh(Object)`.
 
 # Dependencies
-* org.hibernate:hibernate-core:5.2.0.Final
+* org.hibernate:hibernate-core:5.2.2.Final
 * org.springframework:spring-context:4.3.2.RELEASE
 
-Other versions doesn't test.
+Other versions weren't tested.
 
 # Disclaimer
 There is no practical knowledge about stability, scalabilty or performance.
