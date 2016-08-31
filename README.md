@@ -71,4 +71,4 @@ There is no practical knowledge about stability, scalability or performance.
 Use it at your own risk! 
 
 # Licence
-No license
+[MIT](/LICENSE.md)
