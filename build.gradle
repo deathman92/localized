@@ -99,7 +99,6 @@ bintray {
     user = "${bintrayUser}"
     key = "${bintrayKey}"
     publications = ["mavenJava"]
-    dryRun = true
     pkg {
         repo = "${bintrayRepo}"
         name = "${project.name}"
