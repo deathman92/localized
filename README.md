@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/deathman92/localized.svg?branch=master)](https://travis-ci.org/deathman92/localized)
+[ ![Download](https://api.bintray.com/packages/deathman92/maven-release/localized/images/download.svg) ](https://bintray.com/deathman92/maven-release/localized/_latestVersion)
  
 Rewriting https://github.com/malkusch/localized project for my own needs. Now support Hibernate 5.2.2.Final. Other versions weren't tested.
 
@@ -41,6 +42,25 @@ Specify the fully qualified class name in the hibernate property
 Register it programmatically:
 ```java
 LocalizedIntegrator.setLocaleResolver(new SpringLocaleResolver());
+```
+
+# Gradle
+```groovy
+repositories {
+ jcenter()
+}
+
+dependencies {
+ compile("com.github.deathman92.localized:localized:1.0.0")
+}
+```
+# Maven
+```xml
+<dependency>
+  <groupId>com.github.deathman92.localized</groupId>
+  <artifactId>localized</artifactId>
+  <version>1.0.0</version>
+</dependency>
 ```
 
 # Concept
