@@ -3,13 +3,25 @@ jdk: oraclejdk8
 before_install: chmod +x gradlew
 install: ./gradlew assemble
 script: ./gradlew check
-after_success: ./gradlew artifactoryPublish
 branches:
   only:
     - master
     - develop
+    - /^issue-.*$/
+deploy:
+  - provider: script
+    script: ./gradlew bintrayUpload
+    skip_cleanup: true
+    on:
+      branch: master
+  - provider: script
+    script: ./gradlew bintrayUpload
+    skip_cleanup: true
+    on:
+      branch: develop
 before_cache:
   - rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
+  - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
 cache:
   directories:
     - $HOME/.gradle/caches/

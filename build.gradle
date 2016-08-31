@@ -1,27 +1,34 @@
 buildscript {
+
+    ext['propdeps.version'] = '0.0.7'
+    ext['gradle.props.version'] = '1.4.5'
+    ext['bintray.version'] = '1.7'
+
     repositories {
         jcenter()
         maven {url "https://plugins.gradle.org/m2/"}
         maven {url "http://repo.spring.io/plugins-release"}
     }
     dependencies {
-        classpath("org.springframework.build.gradle:propdeps-plugin:0.0.7")
-        classpath("net.saliman:gradle-properties-plugin:1.4.5")
-        classpath("org.jfrog.buildinfo:build-info-extractor-gradle:4.0.0")
+        classpath("org.springframework.build.gradle:propdeps-plugin:${property('propdeps.version')}")
+        classpath("net.saliman:gradle-properties-plugin:${property('gradle.props.version')}")
+        classpath("com.jfrog.bintray.gradle:gradle-bintray-plugin:${property('bintray.version')}")
     }
 }
 
 ext['project.version'] = '0.12-SNAPSHOT'
+
 ext['hibernate.version'] = '5.2.2.Final'
 ext['slf4j.version'] = '1.7.21'
 ext['spring.version'] = '4.3.2.RELEASE'
 ext['lombok.version'] = '1.16.10'
+
 ext['junit.version'] = '4.12'
 ext['assertj.version'] = '2.5.0'
 ext['slf4j.test.version'] = '1.1.0'
 ext['h2.version'] = '1.4.192'
 
-group "io.github.deathman.localized"
+group "com.github.deathman92.localized"
 version "${property('project.version')}"
 description 'Localized is an i18n extension for Hibernate. The @Localized\n' +
             '\t\tannotation provides transparent i18n support on\n' +
@@ -34,7 +41,7 @@ apply plugin: 'propdeps-maven'
 apply plugin: 'propdeps-idea'
 apply plugin: 'net.saliman.properties'
 apply plugin: 'maven-publish'
-apply plugin: 'com.jfrog.artifactory'
+apply plugin: 'com.jfrog.bintray'
 
 sourceCompatibility = JavaVersion.VERSION_1_8
 targetCompatibility = JavaVersion.VERSION_1_8
@@ -42,10 +49,9 @@ targetCompatibility = JavaVersion.VERSION_1_8
 ext {
     isReleaseVersion = !project.version.endsWith("-SNAPSHOT")
 
-    artifactoryRepo = isReleaseVersion ? 'libs-release-local' : 'libs-snapshot-local'
-    artifactoryUrl = "${System.env['CI_ARTIFACTORY_URL'] ?: property('artifactory.url')}"
-    artifactoryUser = "${System.env['CI_ARTIFACTORY_USER'] ?: property('artifactory.user')}"
-    artifactoryPassword = "${System.env['CI_ARTIFACTORY_PASSWORD'] ?: property('artifactory.password')}"
+    bintrayRepo = isReleaseVersion ? 'maven-release' : 'maven-snapshot'
+    bintrayUser = "${System.env['CI_BINTRAY_USER'] ?: property('bintray.user')}"
+    bintrayKey = "${System.env['CI_BINTRAY_KEY'] ?: property('bintray.key')}"
 }
 
 repositories {
@@ -89,22 +95,30 @@ publishing {
     }
 }
 
-artifactory {
-    contextUrl = "http://${artifactoryUrl}/artifactory/"
-    publish {
-        repository {
-            repoKey = "${artifactoryRepo}"
-            username = "${artifactoryUser}"
-            password = "${artifactoryPassword}"
-            maven = true
-        }
-        defaults {
-            publications ('mavenJava')
+bintray {
+    user = "${bintrayUser}"
+    key = "${bintrayKey}"
+    publications = ["mavenJava"]
+    dryRun = true
+    pkg {
+        repo = "${bintrayRepo}"
+        name = "${project.name}"
+        desc = "${project.description}"
+        licenses = ["MIT"]
+        labels = ["hibernate", "l18n", "spring", "localization", "annotation"]
+        websiteUrl = "https://github.com/deathman92/localized"
+        issueTrackerUrl = "https://github.com/deathman92/localized/issues"
+        vcsUrl = "https://github.com/deathman92/localized.git"
+
+        githubRepo = "deathman92/localized"
+        githubReleaseNotesFile = "README.md"
+
+        version {
+            name = "${project.version}"
+            released = new Date()
         }
     }
 }
-
-artifactoryPublish.dependsOn publish
 
 task wrapper(type: Wrapper) {
     gradleVersion = '3.0'
